@@ -1,6 +1,6 @@
 using System;
-using System.Reactive.Disposables;
 using Simple.Wpf.Exceptions.Commands;
+using Simple.Wpf.Exceptions.Extensions;
 using Simple.Wpf.Exceptions.Services;
 
 namespace Simple.Wpf.Exceptions.ViewModels

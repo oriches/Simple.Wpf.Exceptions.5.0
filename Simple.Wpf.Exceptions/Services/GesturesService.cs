@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Simple.Wpf.Exceptions.Extensions;
 using Simple.Wpf.Exceptions.Models;
 
 namespace Simple.Wpf.Exceptions.Services

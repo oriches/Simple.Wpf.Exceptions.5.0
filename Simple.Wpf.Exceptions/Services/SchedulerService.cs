@@ -6,14 +6,16 @@ namespace Simple.Wpf.Exceptions.Services
 {
     public sealed class SchedulerService : ISchedulerService
     {
-        private readonly DispatcherScheduler _dispatcherScheduler;
-
         public SchedulerService()
         {
-            _dispatcherScheduler = DispatcherScheduler.Current;
+            var dispatcher = System.Windows.Threading.Dispatcher.FromThread(Thread.CurrentThread);
+            if (dispatcher == null)
+                throw new ArgumentNullException(nameof(dispatcher));
+            
+            Dispatcher = new SynchronizationContextScheduler(SynchronizationContext.Current);
         }
 
-        public IScheduler Dispatcher => _dispatcherScheduler;
+        public IScheduler Dispatcher { get; }
 
         public IScheduler Current => CurrentThreadScheduler.Instance;
 

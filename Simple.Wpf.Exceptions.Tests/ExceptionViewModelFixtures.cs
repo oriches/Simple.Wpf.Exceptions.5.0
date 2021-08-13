@@ -1,16 +1,15 @@
+using System;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.Exceptions.Services;
+using Simple.Wpf.Exceptions.ViewModels;
+using ObservableExtensions = Simple.Wpf.Exceptions.Extensions.ObservableExtensions;
+
 namespace Simple.Wpf.Exceptions.Tests
 {
-    using System;
-    using Moq;
-    using NUnit.Framework;
-    using Services;
-    using ViewModels;
-
     [TestFixture]
     public sealed class ExceptionViewModelFixtures
     {
-        private Mock<IApplicationService> _applicationService;
-
         [SetUp]
         public void Setup()
         {
@@ -19,8 +18,10 @@ namespace Simple.Wpf.Exceptions.Tests
             var gestureService = new Mock<IGestureService>();
             gestureService.Setup(x => x.SetBusy());
 
-            Extensions.ObservableExtensions.GestureService = gestureService.Object;
+            ObservableExtensions.GestureService = gestureService.Object;
         }
+
+        private Mock<IApplicationService> _applicationService;
 
         [Test]
         public void message_is_null_when_exception_is_null()
@@ -39,7 +40,7 @@ namespace Simple.Wpf.Exceptions.Tests
             // ARRANGE
             var message = "This is the message";
             var exception = new Exception(message);
-            
+
             // ACT
             var viewModel = new ExceptionViewModel(exception, _applicationService.Object);
 
@@ -71,7 +72,7 @@ namespace Simple.Wpf.Exceptions.Tests
 
             // ACT
             var canExecute = viewModel.CopyCommand.CanExecute(null);
-            
+
             // ASSERT
             Assert.That(canExecute, Is.True);
         }
@@ -89,7 +90,7 @@ namespace Simple.Wpf.Exceptions.Tests
 
             // ACT
             viewModel.CopyCommand.Execute(null);
-            
+
             // ASSERT
             _applicationService.Verify();
         }
@@ -98,7 +99,8 @@ namespace Simple.Wpf.Exceptions.Tests
         public void can_not_open_log_folder_when_there_is_no_log_folder()
         {
             // ARRANGE
-            _applicationService.SetupGet<string>(x => x.LogFolder).Returns((string)null);
+            _applicationService.SetupGet(x => x.LogFolder)
+                .Returns((string) null);
 
             var viewModel = new ExceptionViewModel(null, _applicationService.Object);
 
@@ -113,7 +115,8 @@ namespace Simple.Wpf.Exceptions.Tests
         public void can_open_log_folder_when_there_is_a_log_folder()
         {
             // ARRANGE
-            _applicationService.SetupGet<string>(x => x.LogFolder).Returns(@"c:\temp\log.txt");
+            _applicationService.SetupGet(x => x.LogFolder)
+                .Returns(@"c:\temp\log.txt");
 
             var viewModel = new ExceptionViewModel(null, _applicationService.Object);
 
@@ -128,7 +131,8 @@ namespace Simple.Wpf.Exceptions.Tests
         public void opens_log_folder()
         {
             // ARRANGE
-            _applicationService.SetupGet(x => x.LogFolder).Returns(@"c:\temp\log.txt");
+            _applicationService.SetupGet(x => x.LogFolder)
+                .Returns(@"c:\temp\log.txt");
             _applicationService.Setup(x => x.OpenFolder(@"c:\temp\log.txt"));
 
             var viewModel = new ExceptionViewModel(null, _applicationService.Object);

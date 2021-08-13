@@ -11,7 +11,7 @@ namespace Simple.Wpf.Exceptions.Services
             var dispatcher = System.Windows.Threading.Dispatcher.FromThread(Thread.CurrentThread);
             if (dispatcher == null)
                 throw new ArgumentNullException(nameof(dispatcher));
-            
+
             Dispatcher = new SynchronizationContextScheduler(SynchronizationContext.Current);
         }
 

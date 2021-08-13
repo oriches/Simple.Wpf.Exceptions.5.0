@@ -7,7 +7,7 @@ namespace Simple.Wpf.Exceptions.Extensions
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> enumerable)
         {
-            return new ObservableCollection<T>(enumerable);
+            return new(enumerable);
         }
     }
 }

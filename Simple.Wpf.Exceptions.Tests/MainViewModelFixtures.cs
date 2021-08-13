@@ -1,20 +1,18 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Reactive.Testing;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.Exceptions.Services;
+using Simple.Wpf.Exceptions.ViewModels;
+using ObservableExtensions = Simple.Wpf.Exceptions.Extensions.ObservableExtensions;
+
 namespace Simple.Wpf.Exceptions.Tests
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Reactive.Testing;
-    using Moq;
-    using NUnit.Framework;
-    using Services;
-    using ViewModels;
-
     [TestFixture]
     public sealed class MainViewModelFixtures
     {
-        private TestScheduler _testScheduler;
-        private ISchedulerService _schedulerService;
-
         [SetUp]
         public void Setup()
         {
@@ -24,8 +22,11 @@ namespace Simple.Wpf.Exceptions.Tests
             var gestureService = new Mock<IGestureService>();
             gestureService.Setup(x => x.SetBusy());
 
-            Extensions.ObservableExtensions.GestureService = gestureService.Object;
+            ObservableExtensions.GestureService = gestureService.Object;
         }
+
+        private TestScheduler _testScheduler;
+        private ISchedulerService _schedulerService;
 
         [Test]
         public void throws_exception_on_ui_thread()
@@ -64,10 +65,7 @@ namespace Simple.Wpf.Exceptions.Tests
             var viewModel = new MainViewModel(_schedulerService);
 
             Exception thrownException = null;
-            TaskScheduler.UnobservedTaskException += (s, e) =>
-            {
-                thrownException = e.Exception.InnerException;
-            };
+            TaskScheduler.UnobservedTaskException += (s, e) => { thrownException = e.Exception.InnerException; };
 
             // ACT
             viewModel.ThrowFromTaskCommand.Execute(exceptionText);
@@ -101,7 +99,7 @@ namespace Simple.Wpf.Exceptions.Tests
 
                 _testScheduler.AdvanceBy(TimeSpan.FromSeconds(1));
             }
-            catch(Exception exn)
+            catch (Exception exn)
             {
                 thrownException = exn;
             }

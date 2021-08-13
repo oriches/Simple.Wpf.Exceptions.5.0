@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Subjects;
 using Moq;
 using NUnit.Framework;
 using Simple.Wpf.Exceptions.Models;
@@ -9,9 +11,6 @@ using Simple.Wpf.Exceptions.ViewModels;
 
 namespace Simple.Wpf.Exceptions.Tests
 {
-    using System.Reactive;
-    using System.Reactive.Subjects;
-
     [TestFixture]
     public sealed class MessageServiceFixtures
     {
@@ -21,7 +20,8 @@ namespace Simple.Wpf.Exceptions.Tests
             // ARRANGE
             var closed = new Subject<Unit>();
             var contentViewModel = new Mock<ICloseableViewModel>();
-            contentViewModel.Setup(x => x.Closed).Returns(closed);
+            contentViewModel.Setup(x => x.Closed)
+                .Returns(closed);
 
             var service = new MessageService();
 
@@ -42,7 +42,8 @@ namespace Simple.Wpf.Exceptions.Tests
             // ARRANGE
             var closed = new Subject<Unit>();
             var contentViewModel = new Mock<ICloseableViewModel>();
-            contentViewModel.Setup(x => x.Closed).Returns(closed);
+            contentViewModel.Setup(x => x.Closed)
+                .Returns(closed);
 
             var service = new MessageService();
 
@@ -63,11 +64,13 @@ namespace Simple.Wpf.Exceptions.Tests
             // ARRANGE
             var closed1 = new Subject<Unit>();
             var contentViewModel1 = new Mock<ICloseableViewModel>();
-            contentViewModel1.Setup(x => x.Closed).Returns(closed1);
+            contentViewModel1.Setup(x => x.Closed)
+                .Returns(closed1);
 
             var closed2 = new Subject<Unit>();
             var contentViewModel2 = new Mock<ICloseableViewModel>();
-            contentViewModel2.Setup(x => x.Closed).Returns(closed2);
+            contentViewModel2.Setup(x => x.Closed)
+                .Returns(closed2);
 
             var service = new MessageService();
 

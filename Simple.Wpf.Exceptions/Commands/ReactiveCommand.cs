@@ -81,12 +81,12 @@ namespace Simple.Wpf.Exceptions.Commands
 
         public static ReactiveCommand<T> Create()
         {
-            return new ReactiveCommand<T>(Observable.Return(true));
+            return new(Observable.Return(true));
         }
 
         public static ReactiveCommand<T> Create(IObservable<bool> canExecute)
         {
-            return new ReactiveCommand<T>(canExecute);
+            return new(canExecute);
         }
     }
 }

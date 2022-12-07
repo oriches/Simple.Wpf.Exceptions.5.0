@@ -6,13 +6,11 @@ namespace Simple.Wpf.Exceptions.Extensions
 {
     public static class SchedulerExtensions
     {
-        public static IDisposable Schedule(this IScheduler scheduler, TimeSpan timeSpan, Action action)
-        {
-            return scheduler.Schedule<object>(null, timeSpan, (s1, s2) =>
+        public static IDisposable Schedule(this IScheduler scheduler, TimeSpan timeSpan, Action action) =>
+            scheduler.Schedule<object>(null, timeSpan, (s1, s2) =>
             {
                 action();
                 return Disposable.Empty;
             });
-        }
     }
 }

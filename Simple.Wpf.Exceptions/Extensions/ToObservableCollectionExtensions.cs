@@ -5,9 +5,7 @@ namespace Simple.Wpf.Exceptions.Extensions
 {
     public static class ToObservableCollectionExtensions
     {
-        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> enumerable)
-        {
-            return new(enumerable);
-        }
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> enumerable) =>
+            new(enumerable);
     }
 }

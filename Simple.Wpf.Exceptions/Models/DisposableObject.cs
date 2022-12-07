@@ -10,23 +10,17 @@ namespace Simple.Wpf.Exceptions.Models
 
         private readonly CompositeDisposable _disposable;
 
-        protected DisposableObject()
-        {
-            _disposable = new CompositeDisposable();
-        }
+        protected DisposableObject() => _disposable = new CompositeDisposable();
 
         public virtual void Dispose()
         {
             using (Duration.Measure(Logger, "Dispose - " + GetType()
-                .Name))
+                       .Name))
             {
                 _disposable.Dispose();
             }
         }
 
-        public static implicit operator CompositeDisposable(DisposableObject disposable)
-        {
-            return disposable._disposable;
-        }
+        public static implicit operator CompositeDisposable(DisposableObject disposable) => disposable._disposable;
     }
 }

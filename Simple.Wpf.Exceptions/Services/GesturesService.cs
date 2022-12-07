@@ -23,10 +23,7 @@ namespace Simple.Wpf.Exceptions.Services
                 .DisposeWith(this);
         }
 
-        public void SetBusy()
-        {
-            SetBusyState(true);
-        }
+        public void SetBusy() => SetBusyState(true);
 
         private void SetBusyState(bool busy)
         {

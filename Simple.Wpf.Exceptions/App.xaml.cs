@@ -131,7 +131,7 @@ namespace Simple.Wpf.Exceptions
 
             _schedulerService.Dispatcher.Schedule(() =>
             {
-                var parameters = new Parameter[] {new NamedParameter("exception", exception)};
+                var parameters = new Parameter[] { new NamedParameter("exception", exception) };
                 var viewModel = BootStrapper.Resolve<IExceptionViewModel>(parameters);
 
                 viewModel.Closed

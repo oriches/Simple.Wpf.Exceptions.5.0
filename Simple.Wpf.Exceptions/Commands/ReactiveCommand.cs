@@ -13,16 +13,12 @@ namespace Simple.Wpf.Exceptions.Commands
         {
         }
 
-        public new static ReactiveCommand<object> Create()
-        {
-            return ReactiveCommand<object>.Create(Observable.Return(true)
+        public new static ReactiveCommand<object> Create() =>
+            ReactiveCommand<object>.Create(Observable.Return(true)
                 .StartWith(true));
-        }
 
-        public new static ReactiveCommand<object> Create(IObservable<bool> canExecute)
-        {
-            return ReactiveCommand<object>.Create(canExecute);
-        }
+        public new static ReactiveCommand<object> Create(IObservable<bool> canExecute) =>
+            ReactiveCommand<object>.Create(canExecute);
     }
 
     public class ReactiveCommand<T> : IObservable<T>, ICommand, IDisposable
@@ -46,15 +42,12 @@ namespace Simple.Wpf.Exceptions.Commands
 
         public virtual void Execute(object parameter)
         {
-            var typedParameter = parameter is T ? (T) parameter : default;
+            var typedParameter = parameter is T ? (T)parameter : default;
 
             if (CanExecute(typedParameter)) _execute.OnNext(typedParameter);
         }
 
-        public virtual bool CanExecute(object parameter)
-        {
-            return _currentCanExecute;
-        }
+        public virtual bool CanExecute(object parameter) => _currentCanExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -65,7 +58,7 @@ namespace Simple.Wpf.Exceptions.Commands
         public void Dispose()
         {
             using (Duration.Measure(Logger, "Dispose - " + GetType()
-                .Name))
+                       .Name))
             {
                 _canDisposable.Dispose();
 
@@ -74,19 +67,11 @@ namespace Simple.Wpf.Exceptions.Commands
             }
         }
 
-        public IDisposable Subscribe(IObserver<T> observer)
-        {
-            return _execute.Subscribe(observer.OnNext, observer.OnError, observer.OnCompleted);
-        }
+        public IDisposable Subscribe(IObserver<T> observer) =>
+            _execute.Subscribe(observer.OnNext, observer.OnError, observer.OnCompleted);
 
-        public static ReactiveCommand<T> Create()
-        {
-            return new(Observable.Return(true));
-        }
+        public static ReactiveCommand<T> Create() => new(Observable.Return(true));
 
-        public static ReactiveCommand<T> Create(IObservable<bool> canExecute)
-        {
-            return new(canExecute);
-        }
+        public static ReactiveCommand<T> Create(IObservable<bool> canExecute) => new(canExecute);
     }
 }

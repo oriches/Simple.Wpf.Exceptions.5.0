@@ -29,7 +29,7 @@ namespace Simple.Wpf.Exceptions
             if (_rootScope != null) return;
 
             var builder = new ContainerBuilder();
-            var assemblies = new[] {Assembly.GetExecutingAssembly()};
+            var assemblies = new[] { Assembly.GetExecutingAssembly() };
 
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => typeof(IService).IsAssignableFrom(t))
@@ -58,10 +58,7 @@ namespace Simple.Wpf.Exceptions
             _rootScope = builder.Build();
         }
 
-        public static void Stop()
-        {
-            _rootScope.Dispose();
-        }
+        public static void Stop() => _rootScope.Dispose();
 
         public static T Resolve<T>()
         {

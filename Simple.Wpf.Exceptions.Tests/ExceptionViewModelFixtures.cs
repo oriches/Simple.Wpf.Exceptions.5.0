@@ -100,7 +100,7 @@ namespace Simple.Wpf.Exceptions.Tests
         {
             // ARRANGE
             _applicationService.SetupGet(x => x.LogFolder)
-                .Returns((string) null);
+                .Returns((string)null);
 
             var viewModel = new ExceptionViewModel(null, _applicationService.Object);
 

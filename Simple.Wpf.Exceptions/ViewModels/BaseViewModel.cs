@@ -26,15 +26,10 @@ namespace Simple.Wpf.Exceptions.ViewModels
             return _suspendedNotifications.AddRef();
         }
 
-        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> expression)
-        {
+        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> expression) =>
             OnPropertyChanged(ExpressionHelper.Name(expression));
-        }
 
-        protected virtual void OnPropertyChanged()
-        {
-            OnPropertyChanged(null);
-        }
+        protected virtual void OnPropertyChanged() => OnPropertyChanged(null);
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -82,10 +77,7 @@ namespace Simple.Wpf.Exceptions.ViewModels
             private readonly BaseViewModel _target;
             private int _refCount;
 
-            public SuspendedNotifications(BaseViewModel target)
-            {
-                _target = target;
-            }
+            public SuspendedNotifications(BaseViewModel target) => _target = target;
 
             public void Dispose()
             {
@@ -93,10 +85,7 @@ namespace Simple.Wpf.Exceptions.ViewModels
                 _properties.ForEach(x => _target.OnPropertyChanged(x));
             }
 
-            public void Add(string propertyName)
-            {
-                _properties.Add(propertyName);
-            }
+            public void Add(string propertyName) => _properties.Add(propertyName);
 
             public IDisposable AddRef()
             {
